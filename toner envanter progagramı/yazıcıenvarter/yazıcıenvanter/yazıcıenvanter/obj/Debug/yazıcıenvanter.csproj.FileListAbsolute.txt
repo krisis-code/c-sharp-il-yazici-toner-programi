@@ -1,0 +1,14 @@
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\bin\Debug\yazıcıenvanter.exe.config
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\bin\Debug\yazıcıenvanter.exe
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\bin\Debug\yazıcıenvanter.pdb
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\obj\Debug\yazıcıenvanter.csproj.AssemblyReference.cache
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\obj\Debug\yazıcıenvanter.csproj.SuggestedBindingRedirects.cache
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\obj\Debug\yazıcıenvanter.Form1.resources
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\obj\Debug\yazıcıenvanter.Properties.Resources.resources
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\obj\Debug\yazıcıenvanter.csproj.GenerateResource.cache
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\obj\Debug\yazıcıenvanter.csproj.CoreCompileInputs.cache
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\obj\Debug\yazıcıenvanter.exe
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\obj\Debug\yazıcıenvanter.pdb
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\bin\Debug\Microsoft.Office.Tools.Excel.v4.0.Utilities.dll
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\obj\Debug\yazıcıenvanter.csproj.ResolveComReference.cache
+C:\Users\IPFS\Desktop\yazıcıenvarter\yazıcıenvanter\yazıcıenvanter\obj\Debug\yazıcıenvanter.csproj.CopyComplete
