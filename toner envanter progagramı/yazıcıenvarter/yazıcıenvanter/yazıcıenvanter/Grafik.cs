@@ -55,51 +55,12 @@ namespace yazıcıenvanter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Bitmap MyChartPanel = new Bitmap(panel1.Width, panel1.Height);
-            panel1.DrawToBitmap(MyChartPanel, new Rectangle(0, 0, panel1.Width, panel1.Height));
-
-            PrintDialog MyPrintDialog = new PrintDialog();
-
-            if (MyPrintDialog.ShowDialog() == DialogResult.OK)
-            {
-                System.Drawing.Printing.PrinterSettings values;
-                values = MyPrintDialog.PrinterSettings;
-                MyPrintDialog.Document = MyPrintDocument;
-                MyPrintDocument.PrintController = new System.Drawing.Printing.StandardPrintController();
-                MyPrintDocument.Print();
-            }
-
-            MyPrintDocument.Dispose();
+           VoKaydetChart();
         }
-        void PrintChart(object sender, PrintPageEventArgs ev)
-        {
-            using (var f = new System.Drawing.Font("Arial", 10))
-            {
-                var size = ev.Graphics.MeasureString(Text, f);
-                ev.Graphics.DrawString("Whatever text you want", f, Brushes.Black, ev.PageBounds.X + (ev.PageBounds.Width - size.Width) / 2, ev.PageBounds.Y);
-            }
-
-            //Note, the chart printing code wants to print in pixels.
-            System.Drawing.Rectangle marginBounds = ev.MarginBounds;
-            if (ev.Graphics.PageUnit != GraphicsUnit.Pixel)
-            {
-                ev.Graphics.PageUnit = GraphicsUnit.Pixel;
-                marginBounds.X = (int)(marginBounds.X * (ev.Graphics.DpiX / 100f));
-                marginBounds.Y = (int)(marginBounds.Y * (ev.Graphics.DpiY / 100f));
-                marginBounds.Width = (int)(marginBounds.Width * (ev.Graphics.DpiX / 100f));
-                marginBounds.Height = (int)(marginBounds.Height * (ev.Graphics.DpiY / 100f));
-            }
-
-            chart1.Printing.PrintPaint(ev.Graphics, marginBounds);
-        }
+        
         private void button2_Click(object sender, EventArgs e)
         {
-            DialogResult yazdirmaIslemi;
-            yazdirmaIslemi = printDialog1.ShowDialog();
-            if (yazdirmaIslemi == DialogResult.OK)
-            {
-                printDocument1.Print();
-            }
+            chart1.Printing.PrintPreview();
         }
     }
 }
