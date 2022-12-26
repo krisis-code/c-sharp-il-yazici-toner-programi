@@ -21,18 +21,17 @@ namespace yazıcıenvanter
     public partial class Form1 : Form
     {
         SqlConnection con = new SqlConnection("Data Source=DESKTOP-9JCBJ7U;Initial Catalog=tonerStok;Integrated Security=True");
-         SqlCommand cmd;
-        SqlDataReader dr;
+       
         public Form1()
         {
             InitializeComponent();
-            griddoldur();
+            Griddoldur();
             StokTxbx.Enabled = false;
             KullanilanTbx.Enabled = false;
             Arama();
 
         }
-        public void griddoldur()
+        public void Griddoldur()
         {
 
             SqlDataAdapter TstokDa = new SqlDataAdapter("SELECT * FROM   Tstok", con);
@@ -42,12 +41,44 @@ namespace yazıcıenvanter
             datagrip.DataSource = TstokTablo;
             con.Close();
         }
+        public void StokEKleme2()
+        {
+            try
+            {
+                SqlConnection conn = new SqlConnection("Data Source=DESKTOP-9JCBJ7U;Initial Catalog=TonerStokGenel;Integrated Security=True");
 
 
-        public void StokEKleme()
+                SqlCommand VoCmd2 = new SqlCommand("INSERT INTO tonerStokGenel (YaziciNumarasi,Renk,Stok,SatinAlimTarihi,EksikStok,Kullanılan) " +
+                 "VALUES(@YaziciNumarasi,@Renk,@Stok,@SatinAlimTarihi,@EksikStok,@Kullanılan)", conn);
+
+                VoCmd2.Parameters.AddWithValue("@YaziciNumarasi", YpCmbx.Text);
+                VoCmd2.Parameters.AddWithValue("@Renk", RenkCmbx.Text);
+                VoCmd2.Parameters.AddWithValue("@Stok", StokTxbx.Text);
+                VoCmd2.Parameters.AddWithValue("@EksikStok", "0");
+                VoCmd2.Parameters.AddWithValue("@Kullanılan", "0");
+                VoCmd2.Parameters.AddWithValue("@SatinAlimTarihi", dateTimePicker1.Value);
+
+                conn.Open();
+                VoCmd2.ExecuteNonQuery();
+                MessageBox.Show("Kaydedildi");
+
+                conn.Close();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+
+            
+        }
+
+
+            public void StokEKleme()
         {
             int Stok = 0;
-            int Kullanılan = 0;
+            
 
             for (int i = 0; i < datagrip.Rows.Count; i++)
             {
@@ -58,7 +89,7 @@ namespace yazıcıenvanter
 
             }
             Arama();
-            guncelle();
+            Guncelle();
             label1.Text = Stok.ToString();
             if (label1.Text=="0")
             {
@@ -79,7 +110,7 @@ namespace yazıcıenvanter
                 con.Close();
 
                 Arama();
-                guncelle();
+                Guncelle();
             }
             else
             {
@@ -91,7 +122,7 @@ namespace yazıcıenvanter
                 cmd.ExecuteNonQuery();
                 con.Close();
                 Arama();
-                guncelle();
+                Guncelle();
             }
 
 
@@ -119,7 +150,7 @@ namespace yazıcıenvanter
             label2.Text = Kullanılan.ToString();
             label3.Text = kullan.ToString();
             Arama();
-            guncelle();
+            Guncelle();
             if (label1.Text == "0")
             {
                 MessageBox.Show("Stok kalmadı");
@@ -136,7 +167,7 @@ namespace yazıcıenvanter
                 cmd.ExecuteNonQuery();
                 con.Close();
                 Arama();
-                guncelle();
+                Guncelle();
             }
             else
             {
@@ -149,7 +180,7 @@ namespace yazıcıenvanter
                 cmd.ExecuteNonQuery();
                 con.Close();
                 Arama();
-                guncelle();
+                Guncelle();
             }
           
             for (int i = 0; i < datagrip.Rows.Count; i++)
@@ -166,38 +197,64 @@ namespace yazıcıenvanter
             label2.Text = Kullanılan.ToString();
             label3.Text = kullan.ToString();
             Arama();
-            guncelle();
+            Guncelle();
 
 
         }
-        public void cikti()
+        public void StokCikti2()
         {
-            int Stok = 0;
-            int Kullanılan = 0;
 
-            for (int i = 0; i < datagrip.Rows.Count; i++)
-            {
-
-                Stok += Convert.ToInt32(datagrip.Rows[i].Cells["Stok"].Value);
-                Kullanılan += Convert.ToInt32(datagrip.Rows[i].Cells["Kullanılan"].Value);
+            SqlConnection conn = new SqlConnection("Data Source=DESKTOP-9JCBJ7U;Initial Catalog=TonerStokGenel;Integrated Security=True");
 
 
-            }
+            SqlCommand VoCmd2 = new SqlCommand("INSERT INTO tonerStokGenel (YaziciNumarasi,Renk,KullanimTarihi,Kullanılan) " +
+             "VALUES(@YaziciNumarasi,@Renk@KullanimTarihi,@Kullanılan)", conn);
 
-            label1.Text = Stok.ToString();
-            label2.Text = Kullanılan.ToString();
+            VoCmd2.Parameters.AddWithValue("@YaziciNumarasi", YpCmbx.Text);
+            VoCmd2.Parameters.AddWithValue("@Renk", RenkCmbx.Text);
+            VoCmd2.Parameters.AddWithValue("@Stok", StokTxbx.Text);
+            
+            VoCmd2.Parameters.AddWithValue("@Kullanılan", KullanilanTbx.Text);
+            VoCmd2.Parameters.AddWithValue("@KullanimTarihi", dateTimePicker1.Value);
 
-            SqlCommand cmd = new SqlCommand(" update  Tstok  set  Stok=@Stok, Kullanılan = @Kullanılan, EksikStok=@EksikStok,KullanimTarihi= @KullanimTarihi where YaziciNumarasi = '%"+YpCmbx.SelectedValue+"%' and Renk = '%" +RenkCmbx.SelectedValue+ "%' ", con);
-            con.Open();
-            cmd.Parameters.AddWithValue("@Kullanılan", KullanilanTbx.Text);
-            cmd.Parameters.AddWithValue("@KullanimTarihi", dateTimePicker1.Value);
-            cmd.Parameters.AddWithValue("@Stok", int.Parse(label1.Text) - int.Parse(label2.Text));
-            cmd.Parameters.AddWithValue("@EksikStok",label2.Text);
-            cmd.ExecuteNonQuery();
-            con.Close();
-            guncelle();
-            StokCikti();
+            conn.Open();
+            VoCmd2.ExecuteNonQuery();
+            MessageBox.Show("Kaydedildi");
+
+            conn.Close();
         }
+           
+
+
+
+        //public void Cikti()
+        //{
+        //    int Stok = 0;
+        //    int Kullanılan = 0;
+
+        //    for (int i = 0; i < datagrip.Rows.Count; i++)
+        //    {
+
+        //        Stok += Convert.ToInt32(datagrip.Rows[i].Cells["Stok"].Value);
+        //        Kullanılan += Convert.ToInt32(datagrip.Rows[i].Cells["Kullanılan"].Value);
+
+
+        //    }
+
+        //    label1.Text = Stok.ToString();
+        //    label2.Text = Kullanılan.ToString();
+
+        //    SqlCommand cmd = new SqlCommand(" update  Tstok  set  Stok=@Stok, Kullanılan = @Kullanılan, EksikStok=@EksikStok,KullanimTarihi= @KullanimTarihi where YaziciNumarasi = '%"+YpCmbx.SelectedValue+"%' and Renk = '%" +RenkCmbx.SelectedValue+ "%' ", con);
+        //    con.Open();
+        //    cmd.Parameters.AddWithValue("@Kullanılan", KullanilanTbx.Text);
+        //    cmd.Parameters.AddWithValue("@KullanimTarihi", dateTimePicker1.Value);
+        //    cmd.Parameters.AddWithValue("@Stok", int.Parse(label1.Text) - int.Parse(label2.Text));
+        //    cmd.Parameters.AddWithValue("@EksikStok",label2.Text);
+        //    cmd.ExecuteNonQuery();
+        //    con.Close();
+        //    Guncelle();
+        //    StokCikti();
+        //}
 
         public void Arama()
         {
@@ -225,7 +282,7 @@ namespace yazıcıenvanter
 
 
         }
-        public void guncelle()
+        public void Guncelle()
         {
             int Stok = 0;
             int Kullanılan = 0;
@@ -252,12 +309,14 @@ namespace yazıcıenvanter
                 StokTxbx.Enabled = true;
                 KullanilanTbx.Enabled = false;
                 StokEKleme();
+                StokEKleme2();
             }
             if (IslemCmbx.Text == "Çıktı")
             {
                 KullanilanTbx.Enabled = true;
                 StokTxbx.Enabled = false;
                 StokCikti();
+                StokCikti2();
 
             }
             
@@ -281,7 +340,7 @@ namespace yazıcıenvanter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            guncelle();
+            Guncelle();
         }
 
         private void YpCmbx_SelectedValueChanged(object sender, EventArgs e)
@@ -296,12 +355,13 @@ namespace yazıcıenvanter
 
         private void button2_Click(object sender, EventArgs e)
         {
-            griddoldur();
+            Griddoldur();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Excel.Application excel = new Excel.Application();
+            Excel.Application application = new Excel.Application();
+            Excel.Application excel = application;
             excel.Visible = true;
             object Missing = Type.Missing;
             Workbook workbook = excel.Workbooks.Add(Missing);
@@ -326,6 +386,12 @@ namespace yazıcıenvanter
 
                 }
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Grafik a = new Grafik();
+            a.Show();
         }
     }
 }
