@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,13 +16,55 @@ namespace yazıcıenvanter
     {
         public Grafik()
         {
-
-            //chart1.Series["Deneme"].Points.AddXY("enes", 12);
-            //chart1.Series["Deneme"].Points.AddXY("enes", 12);
-            chart1.Series["Deneme"].Points.AddXY("enes", 1);
+            
             InitializeComponent();
         }
-        
 
+        private void Grafik_Load(object sender, EventArgs e)
+        {
+
+        }
+        public void VoKaydetChart()
+        {
+            try
+            {
+                SqlConnection conn = new SqlConnection("Data Source=DESKTOP-9JCBJ7U;Initial Catalog=TonerStokGenel;Integrated Security=True");
+
+
+                SqlCommand VoChartcmd = new SqlCommand("SELECT Kullanılan,KullanimTarihi FROM tonerStokGenel ORDER BY KullanimTarihi ", conn);
+                conn.Open();
+                SqlDataReader VoRead = VoChartcmd.ExecuteReader();
+                while (VoRead.Read())
+                {
+                    chart1.Series["Series1"].Points.AddXY(VoRead[1], VoRead[0]);
+                    
+
+                }
+                VoRead.Close();
+                conn.Close();
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Vucut ölçüleri chart veri tabanına kaydetme hatsı" + ex.Message);
+            }
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            VoKaydetChart();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DialogResult yazdirmaIslemi;
+            yazdirmaIslemi = printDialog1.ShowDialog();
+            if (yazdirmaIslemi == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
+        }
     }
 }

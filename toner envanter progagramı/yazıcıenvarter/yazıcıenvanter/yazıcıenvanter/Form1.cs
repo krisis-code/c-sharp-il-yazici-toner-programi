@@ -208,7 +208,7 @@ namespace yazıcıenvanter
 
 
             SqlCommand VoCmd2 = new SqlCommand("INSERT INTO tonerStokGenel (YaziciNumarasi,Renk,KullanimTarihi,Kullanılan) " +
-             "VALUES(@YaziciNumarasi,@Renk@KullanimTarihi,@Kullanılan)", conn);
+             "VALUES(@YaziciNumarasi,@Renk,@KullanimTarihi,@Kullanılan)", conn);
 
             VoCmd2.Parameters.AddWithValue("@YaziciNumarasi", YpCmbx.Text);
             VoCmd2.Parameters.AddWithValue("@Renk", RenkCmbx.Text);
